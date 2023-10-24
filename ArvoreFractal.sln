@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34024.191
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArvoreFractal", "ArvoreFractal.csproj", "{643041A8-7F40-4A18-821B-054BB9D9ACAC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{643041A8-7F40-4A18-821B-054BB9D9ACAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{643041A8-7F40-4A18-821B-054BB9D9ACAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{643041A8-7F40-4A18-821B-054BB9D9ACAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{643041A8-7F40-4A18-821B-054BB9D9ACAC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AB1457F4-6E45-488A-B2FC-BDF4E9CA467A}
+	EndGlobalSection
+EndGlobal

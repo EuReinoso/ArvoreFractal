@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "h72vpHy4EOtt+99vgNc8B/9UlDV7ugGW08/7dbAliqjnPa/98mceGVUq8yE/UHKpaL7ES6ncIiv2NVFSOyreRA==",
+  "success": true,
+  "projectFilePath": "C:\\PROJECTS\\ArvoreFractal\\ArvoreFractal.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\lucas\\.nuget\\packages\\monogame.content.builder.task\\3.8.1.303\\monogame.content.builder.task.3.8.1.303.nupkg.sha512",
+    "C:\\Users\\lucas\\.nuget\\packages\\monogame.framework.desktopgl\\3.8.1.303\\monogame.framework.desktopgl.3.8.1.303.nupkg.sha512"
+  ],
+  "logs": []
+}
