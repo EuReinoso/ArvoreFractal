@@ -11,12 +11,14 @@ namespace MgEngine.Window
         private Rectangle _destinationRectangle;
         private SpriteBatch _spriteBatch;
 
-        public Canvas(GraphicsDevice graphicsDevice, int width, int height) 
-        { 
+        public Canvas(GraphicsDevice graphicsDevice, int width, int height)
+        {
             _graphicsDevice = graphicsDevice;
             _renderTarget = new(_graphicsDevice, width, height);
             _spriteBatch = new(_graphicsDevice);
         }
+
+        public Vector2 Center { get{ return new Vector2(_renderTarget.Width, _renderTarget.Height); } }
         
         public SpriteBatch SpriteBatch { get { return _spriteBatch; } }
 

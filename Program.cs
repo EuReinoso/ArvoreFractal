@@ -1,3 +1,3 @@
 ﻿
-using var game = new ArvoreFractal.Game1();
+using var game = new ArvoreFractal.ArvoreFractal();
 game.Run();

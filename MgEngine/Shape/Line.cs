@@ -24,6 +24,11 @@ namespace MgEngine.Shape
             Width = width;
         }
 
+        public int Length
+        {
+            get { return (int)Vector2.Distance(P1, P2); }
+        }
+
         public Line(int p1x, int p1y, int p2x, int p2y, int width = 1)
         {
             P1 = new Vector2(p1x, p1y);
@@ -34,11 +39,9 @@ namespace MgEngine.Shape
         {
             _color = color;
 
-            int distance = (int)Vector2.Distance(P1, P2);
+            _texture = new Texture2D(graphicsDevice, Width, Length);
 
-            _texture = new Texture2D(graphicsDevice, Width, distance);
-
-            Color[] textureData = new Color[Width * distance];
+            Color[] textureData = new Color[Width * Length];
             for (int i = 0; i < textureData.Length; i++)
             {
                 textureData[i] = color;
@@ -54,7 +57,8 @@ namespace MgEngine.Shape
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            float rotation = -(float)Math.Atan2(P2.Y - P1.Y, P2.X - P1.X);
+            //float rotation = -(float)Math.Atan2(P2.Y - P1.Y, P2.X - P1.X);
+            float rotation = -(float)Math.Atan2(P2.X - P1.X, P2.Y - P1.Y);
 
             Vector2 origin = new Vector2(0, Width / 2);
 
