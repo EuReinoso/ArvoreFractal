@@ -7,7 +7,8 @@ using MgEngine.Font;
 using MgEngine.Time;
 using static MgEngine.Util.MgMath;
 using ArvoreFractal.Scripts;
-
+using ArvoreFractal.MgEngine.Input;
+using MgEngine.Sprites;
 
 namespace ArvoreFractal
 {
@@ -19,6 +20,8 @@ namespace ArvoreFractal
         private FontManager _font;
         private Clock _clock;
         private Tree tree;
+        private InputManager _key = new();
+        private SpritesManager _sprites;
         public ArvoreFractal()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -33,14 +36,17 @@ namespace ArvoreFractal
             _window = new(_graphics, 720, 1000);
             _window.SetResolution(720, 1000);
 
+            _sprites = new(GraphicsDevice, _window);
+
             _font = new(Content, "Font/");
             _font.AddFont("Default");
+            _font.AddFont("Default20");
             _font.SetDefaultFont("Default");
 
             _clock.IsFpsLimited = false;
             //_clock.FpsLimit = 60;
 
-            tree = new(GraphicsDevice, 12, 0.8f, ToRadians(22), ToRadians(0), 2);
+            tree = new(_sprites);
 
             base.Initialize();
         }
@@ -58,25 +64,29 @@ namespace ArvoreFractal
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            _key.Update(Keyboard.GetState());
             _clock.Update(gameTime);
 
-            tree.PlantTree(new Vector2(360, 800), ToRadians(-90) , 120);
+            // TODO: Add your update logic here
+
+
+            tree.Update(_clock.Dt, _key);
+            tree.PlantTree(new Vector2(_window.Center.X, (int)(_window.Height * 0.8)), ToRadians(-90) , 120);
+
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
             _window.Canvas.Activate();
             _spriteBatch.Begin();
 
             // TODO: Add your drawing code here
 
-            tree.Draw(_spriteBatch);
+            tree.Draw();
 
             tree.DrawInfo(_spriteBatch, _font);
-            _font.DrawText(_spriteBatch, "FPS: " + _clock.Fps.ToString(), new(10, 10), Color.White);
+            _font.DrawText(_spriteBatch, "FPS: " + _clock.Fps.ToString(), new(20, 10), Color.White);
 
             _spriteBatch.End();
             _window.Canvas.Draw(_spriteBatch);

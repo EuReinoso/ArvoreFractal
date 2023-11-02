@@ -1,5 +1,6 @@
 ﻿using MgEngine.Shape;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace ArvoreFractal.Scripts
 {

@@ -7,6 +7,6 @@
     <File>C:/PROJECTS/ArvoreFractal/Content/Font/File.spritefont</File>
   </SourceFiles>
   <DestFiles>
-    <File>Font/Default.spritefont</File>
+    <File>Font/Default20.spritefont</File>
   </DestFiles>
 </SourceFileCollection>

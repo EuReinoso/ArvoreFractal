@@ -18,11 +18,20 @@ namespace MgEngine.Window
             _spriteBatch = new(_graphicsDevice);
         }
 
-        public Vector2 Center { get{ return new Vector2(_renderTarget.Width, _renderTarget.Height); } }
+        public int Width { get { return _renderTarget.Width; } }
         
+        public int Height { get { return _renderTarget.Height; } }
+        public Vector2 Center { get{ return new Vector2(_renderTarget.Width / 2, _renderTarget.Height / 2); } }
+
         public SpriteBatch SpriteBatch { get { return _spriteBatch; } }
 
         public RenderTarget2D RenderTarget { get { return _renderTarget; } }
+
+        public void SetResolution(int width, int height)
+        {
+            _renderTarget = new(_graphicsDevice, width, height);
+            SetDestinationRectangle();
+        }
 
         public void SetDestinationRectangle()
         {
@@ -57,5 +66,11 @@ namespace MgEngine.Window
             spriteBatch.End();
 
         }
+
+        public void Clear(Color color)
+        {
+            _graphicsDevice.Clear(color);
+        }
+
     }
 }

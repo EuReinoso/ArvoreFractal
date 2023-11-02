@@ -8,57 +8,76 @@ namespace MgEngine.Shape
 {
     public class Rect : Box2D
     {    
-        private Texture2D _texture;
 
-        private Color _color;
+        private Vector2[] _vertices;
 
         public Rect(int x, int y, int width, int height) : base(x, y, width, height)
         {
-
+            _vertices = new Vector2[4];
+            CalculateVertices();
         }
 
-        public Rectangle Rectangle 
+        #region Properties
+        public int Left { get { return X; } }
+        public int Right { get { return X + Width; } }
+        public int Top { get { return Y; } }
+        public int Bottom { get { return Y + Height; } }
+        public Vector2[] Vertices { get { return _vertices; } }
+        public Rectangle Rectangle { get { return new Rectangle(X, Y, Width, Height); } }
+
+        public new int X
         {
-            get { return new Rectangle(X, Y, Width, Height); }
-        }
+            get { return (int)Pos.X; }
 
-        public void Draw(SpriteBatch spriteBatch)
-        {   
-            if (_texture != null)
-            {
-                spriteBatch.Draw(_texture, Pos, Rectangle, _color, Rotation, Center, 1, SpriteEffects.None, 1);
-            }
-            else
-            {
-                throw new Exception("Attempt to Draw an Rect Without Texture, call Load first.");
+            set 
+            { 
+                Pos = new Vector2(value, Pos.Y);
+                CalculateVertices();
             }
         }
 
-        public void SetColor(GraphicsDevice graphicsDevice, Color color)
+
+        public new int Y
         {
-            try
-            {
-                _color = color;
+            get { return (int)Pos.Y; }
 
-                _texture = new Texture2D(graphicsDevice, Width, Height);
-
-                Color[] textureData = new Color[Width * Height];
-                for (int i = 0; i < textureData.Length; i++)
-                {
-                    textureData[i] = color;
-                }
-
-                _texture.SetData(textureData);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
+            set 
+            { 
+                Pos = new Vector2(Pos.X, value);
+                CalculateVertices();
             }
         }
 
-        public void Load(GraphicsDevice graphicsDevice, Color color)
+        public new int Width 
         {
-            SetColor(graphicsDevice, color);
+            get { return base.Width; }
+
+            set
+            {
+                base.Width = value;
+                CalculateVertices();
+            }
         }
+
+        public new int Height
+        {
+            get { return base.Height; }
+
+            set
+            {
+                base.Height = value;
+                CalculateVertices();
+            }
+        }
+
+        #endregion
+        private void CalculateVertices()
+        {
+            _vertices[0] = new Vector2(Left, Top);
+            _vertices[1] = new Vector2(Right, Top);
+            _vertices[2] = new Vector2(Right, Bottom);
+            _vertices[3] = new Vector2(Left, Bottom);
+        }
+
     }
 }

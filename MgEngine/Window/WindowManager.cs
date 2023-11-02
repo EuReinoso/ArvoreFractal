@@ -15,6 +15,10 @@ namespace MgEngine.Window
             _canvas.SetDestinationRectangle();
         }
 
+        public int Width { get { return _graphics.PreferredBackBufferWidth; } }
+        public int Height { get { return _graphics.PreferredBackBufferHeight; } }
+        public Vector2 Center { get {return new Vector2(Width / 2, Height / 2);} }
+
         public void SetResolution(int width, int height)
         {
             _graphics.PreferredBackBufferWidth = width;
