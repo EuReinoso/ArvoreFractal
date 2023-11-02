@@ -81,14 +81,19 @@ namespace MgEngine.Shape
             e1.Normalize();
             e1 *= halfWidth;
 
-            Vector2 e2 = -e1;
             Vector2 n1 = new Vector2(-e1.Y, e1.X);
             Vector2 n2 = -n1;
 
-            _vertices[0] = _p1 + n1 + e2;
-            _vertices[1] = _p2 + n1 + e1;
-            _vertices[2] = _p2 + n2 + e1;
-            _vertices[3] = _p1 + n2 + e2;
+            _vertices[0] = _p1 + n1;
+            _vertices[1] = _p2 + n1;
+            _vertices[2] = _p2 + n2;
+            _vertices[3] = _p1 + n2;
+
+            //Considera Width
+            //_vertices[0] = _p1 + n1 + e2;
+            //_vertices[1] = _p2 + n1 + e1;
+            //_vertices[2] = _p2 + n2 + e1;
+            //_vertices[3] = _p1 + n2 + e2;
         }
 
     }

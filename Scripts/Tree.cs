@@ -13,6 +13,8 @@ namespace ArvoreFractal.Scripts
 {
     public class Tree
     {
+        private SpritesManager _sprites;
+
         public int maxLayer;
         public int stickBranches;
         public float stickLengthDecay;
@@ -21,15 +23,20 @@ namespace ArvoreFractal.Scripts
         public int stickWidth;
         public int stickWidthDecay;
 
-        private bool _replant = true;
+        private bool _replant;
 
-        private SpritesManager _sprites;
+        private List<Stick> _sticks;
 
-        private List<Stick> _sticks = new();
+        private int _colorMode;
+        private Color[] RAINBOWCOLORS;
 
-        public Tree(SpritesManager sprites) 
+    public Tree(SpritesManager sprites) 
         {
             _sprites = sprites;
+
+            _replant = true;
+            _sticks = new();
+
             maxLayer = 3;
             stickLengthDecay = 0.8f;
             stickAngle = ToRadians(30);
@@ -37,6 +44,19 @@ namespace ArvoreFractal.Scripts
             stickBranches = 2;
             stickWidth = 1;
             stickWidthDecay = 1;
+
+            _colorMode = 1;
+
+            RAINBOWCOLORS =  new Color[]
+            {
+                Color.Red,
+                Color.Orange,
+                Color.Yellow,
+                Color.Green,
+                Color.Blue,
+                Color.Indigo,
+                Color.Violet
+            };
         }
 
         public void Draw()
@@ -44,7 +64,7 @@ namespace ArvoreFractal.Scripts
             foreach (Stick stick in _sticks)
             {
                 Color color = new Color(new Random().Next(256), new Random().Next(256), new Random().Next(256));
-                _sprites.DrawLine(stick, Color.White);
+                _sprites.DrawLine(stick, stick.color);
             }
         }
 
@@ -55,6 +75,19 @@ namespace ArvoreFractal.Scripts
 
         private void UpdateInput(float dt, InputManager key)
         {
+            if (key.KeyDown(Keys.C))
+            {
+                if (_colorMode + 1 <= 4)
+                {
+                    _colorMode += 1;
+                }
+                else
+                {
+                    _colorMode = 1;
+                }
+
+                _replant = true;
+            }
 
             if (key.IsKeyDown(Keys.Up))
             {
@@ -162,6 +195,31 @@ namespace ArvoreFractal.Scripts
             float y2 = p1.Y + (int)(Math.Sin(angle) * length);
 
             Stick newStick = new(p1, new Vector2(x2, y2), newWidth);
+
+            if (_colorMode == 1)
+            {
+                newStick.color = Color.White;
+            }
+            else if (_colorMode == 2)
+            {
+                newStick.color = RAINBOWCOLORS[layer % RAINBOWCOLORS.Length];
+            }
+            else if (_colorMode == 3)
+            {
+                newStick.color = RAINBOWCOLORS[(int)Math.Abs(angle) % RAINBOWCOLORS.Length];
+            }
+            else if (_colorMode == 4)
+            {
+                if (length < 10 || layer + 1 >= maxLayer)
+                {
+                    newStick.color = Color.Green;
+                }
+                else
+                {
+                    newStick.color = new Color(229, 170, 112);
+                }
+            }
+            
             AddStick(newStick);
 
             float startAngle = angle - (stickBranches - 1) * stickAngle;
@@ -182,10 +240,15 @@ namespace ArvoreFractal.Scripts
             int degrees = (int)ToDegrees(stickAngle);
             string angle = degrees.ToString();
 
+            degrees = (int)ToDegrees(stickAngleDecay);
+            string angleDecay = degrees.ToString();
+
             string text = "Camadas: " + maxLayer.ToString()
                         + "\n" + "Galhos: " + _sticks.Count.ToString()
                         + "\n" + "Proporcao de Tamanho: " + stickLengthDecay.ToString("F2")
-                        + "\n" + "Angulo: " + angle;
+                        + "\n" + "Angulo: " + angle
+                        + "\n" + "Ganho de Angulo: " + angleDecay
+                        + "\n" + "Grossura: " + stickWidth.ToString();
             fonts.DrawText(spriteBatch, text, new(20, 30), Color.White);
 
             //fonts.DrawText(spriteBatch, _stickLengthDecay.ToString("F2"), new(360- 30, 500 + 20), Color.Red, "Default20");
