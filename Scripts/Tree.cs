@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework.Input;
 using MgEngine.Time;
 using ArvoreFractal.MgEngine.Input;
 using MgEngine.Sprites;
+using System.Reflection.Emit;
+using System.Reflection.Metadata;
 
 namespace ArvoreFractal.Scripts
 {
@@ -24,6 +26,7 @@ namespace ArvoreFractal.Scripts
         public int stickWidthDecay;
 
         private bool _replant;
+        private bool _randomMode;
 
         private List<Stick> _sticks;
 
@@ -63,7 +66,6 @@ namespace ArvoreFractal.Scripts
         {
             foreach (Stick stick in _sticks)
             {
-                Color color = new Color(new Random().Next(256), new Random().Next(256), new Random().Next(256));
                 _sprites.DrawLine(stick, stick.color);
             }
         }
@@ -75,6 +77,11 @@ namespace ArvoreFractal.Scripts
 
         private void UpdateInput(float dt, InputManager key)
         {
+            if (key.KeyDown(Keys.Space))
+            {
+                _randomMode = true;
+            }
+
             if (key.KeyDown(Keys.C))
             {
                 if (_colorMode + 1 <= 4)
@@ -103,7 +110,7 @@ namespace ArvoreFractal.Scripts
 
             if (key.IsKeyDown(Keys.LeftShift) && key.IsKeyDown(Keys.Left))
             {
-                stickAngleDecay -= ToRadians(1);
+                stickAngleDecay -= ToRadians(0.5f);
                 _replant = true;
             }
             else if (key.IsKeyDown(Keys.Left))
@@ -114,7 +121,7 @@ namespace ArvoreFractal.Scripts
 
             if (key.IsKeyDown(Keys.LeftShift) && key.IsKeyDown(Keys.Right))
             {
-                stickAngleDecay += ToRadians(1);
+                stickAngleDecay += ToRadians(0.5f);
                 _replant = true;
             }
             else if (key.IsKeyDown(Keys.Right))
@@ -171,6 +178,12 @@ namespace ArvoreFractal.Scripts
                 Build(startPoint, startAngle, startLenght, 0, stickWidth);
                 _replant = false;
             }
+            else if (_randomMode)
+            {
+                _sticks = new();
+                BuildRandom(startPoint, startAngle, startLenght, 0, stickWidth);
+                _randomMode = false;
+            }
         }
 
         private void Build(Vector2 p1, float angle, int length, int layer, int width)
@@ -196,30 +209,8 @@ namespace ArvoreFractal.Scripts
 
             Stick newStick = new(p1, new Vector2(x2, y2), newWidth);
 
-            if (_colorMode == 1)
-            {
-                newStick.color = Color.White;
-            }
-            else if (_colorMode == 2)
-            {
-                newStick.color = RAINBOWCOLORS[layer % RAINBOWCOLORS.Length];
-            }
-            else if (_colorMode == 3)
-            {
-                newStick.color = RAINBOWCOLORS[(int)Math.Abs(angle) % RAINBOWCOLORS.Length];
-            }
-            else if (_colorMode == 4)
-            {
-                if (length < 10 || layer + 1 >= maxLayer)
-                {
-                    newStick.color = Color.Green;
-                }
-                else
-                {
-                    newStick.color = new Color(229, 170, 112);
-                }
-            }
-            
+            newStick.color = GenStickColor(length, layer, angle);
+
             AddStick(newStick);
 
             float startAngle = angle - (stickBranches - 1) * stickAngle;
@@ -227,11 +218,53 @@ namespace ArvoreFractal.Scripts
             layer += 1;
             for (int i = 0; i < stickBranches; i++)
             {
-                //float newAngle = startAngle + i  * stickAngle * 2;
                 float newAngle = startAngle + i * stickAngle * 2;
                 newAngle += stickAngleDecay;
 
                 Build(newStick.P2, newAngle, (int)(length * stickLengthDecay), layer, newWidth);
+            }
+        }
+
+        private void BuildRandom(Vector2 p1, float angle, int length, int layer, int width)
+        {
+            if (layer >= maxLayer || length <= 1)
+            {
+                return;
+            }
+
+            int newWidth;
+
+            if (width - stickWidthDecay > 0)
+            {
+                newWidth = width - stickWidthDecay;
+            }
+            else
+            {
+                newWidth = width;
+            }
+
+            float x2 = p1.X + (int)(Math.Cos(angle) * length);
+            float y2 = p1.Y + (int)(Math.Sin(angle) * length);
+
+            Stick newStick = new(p1, new Vector2(x2, y2), newWidth);
+
+            newStick.color = GenStickColor(length, layer, angle);
+
+            AddStick(newStick);
+
+            float randomAngle = ToRadians(new Random().Next(-50, 50));
+
+            float startAngle = angle - (stickBranches - 1) * randomAngle;
+
+            layer += 1;
+            for (int i = 0; i < stickBranches; i++)
+            {
+                randomAngle = ToRadians(new Random().Next(-50, 50));
+
+                float newAngle = startAngle + i * randomAngle * 2;
+                newAngle += stickAngleDecay;
+
+                BuildRandom(newStick.P2, newAngle, (int)(length * stickLengthDecay), layer, newWidth);
             }
         }
 
@@ -255,12 +288,43 @@ namespace ArvoreFractal.Scripts
             //fonts.DrawText(spriteBatch, _maxLayer.ToString(), new(360 - 15, 500 + 45), Color.Green, "Default20");
         }
 
+        private Color GenStickColor(int length, int layer, float angle)
+        {
+            Color color = new();
+
+            if (_colorMode == 1)
+            {
+                color = Color.White;
+            }
+            else if (_colorMode == 2)
+            {
+                color = RAINBOWCOLORS[layer % RAINBOWCOLORS.Length];
+            }
+            else if (_colorMode == 3)
+            {
+                color = RAINBOWCOLORS[(int)Math.Abs(angle) % RAINBOWCOLORS.Length];
+            }
+            else if (_colorMode == 4)
+            {
+                if (length < 10 || layer + 1 >= maxLayer)
+                {
+                    color = Color.Green;
+                }
+                else
+                {
+                    color = new Color(229, 170, 112);
+                }
+            }
+
+            return color;
+        }
+
         private void AddStick(Stick stick)
         {
             _sticks.Add(stick);
         }
 
-        public void Clean()
+        public void Clear()
         {
             _sticks.Clear();
         }

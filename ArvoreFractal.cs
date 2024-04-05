@@ -33,8 +33,11 @@ namespace ArvoreFractal
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            _window = new(_graphics, 720, 1000);
-            _window.SetResolution(720, 1000);
+            //_window = new(_graphics, 720, 1000);
+            //_window.SetResolution(720, 1000);
+
+            _window = new(_graphics, 1080, 720);
+            _window.SetResolution(1080, 720);
 
             _sprites = new(GraphicsDevice, _window);
 
