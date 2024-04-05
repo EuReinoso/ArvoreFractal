@@ -54,6 +54,19 @@
             "rid": "win-x86"
           }
         }
+      },
+      "MgEngine/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "MonoGame.Framework.DesktopGL": "3.8.1.303"
+        },
+        "compile": {
+          "bin/placeholder/MgEngine.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/MgEngine.dll": {}
+        }
       }
     }
   },
@@ -93,10 +106,16 @@
         "runtimes/win-x86/native/SDL2.dll",
         "runtimes/win-x86/native/soft_oal.dll"
       ]
+    },
+    "MgEngine/1.0.0": {
+      "type": "project",
+      "path": "../MgEngine/MgEngine.csproj",
+      "msbuildProject": "../MgEngine/MgEngine.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
+      "MgEngine >= 1.0.0",
       "MonoGame.Content.Builder.Task >= 3.8.1.303",
       "MonoGame.Framework.DesktopGL >= 3.8.1.303"
     ]
@@ -132,7 +151,11 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\PROJECTS\\MgEngine\\MgEngine.csproj": {
+              "projectPath": "C:\\PROJECTS\\MgEngine\\MgEngine.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

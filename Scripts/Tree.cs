@@ -6,7 +6,7 @@ using System;
 using static MgEngine.Util.MgMath;
 using Microsoft.Xna.Framework.Input;
 using MgEngine.Time;
-using ArvoreFractal.MgEngine.Input;
+using MgEngine.Input;
 using MgEngine.Sprites;
 using System.Reflection.Emit;
 using System.Reflection.Metadata;

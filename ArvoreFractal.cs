@@ -2,12 +2,13 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+using ArvoreFractal.Scripts;
+
+using static MgEngine.Util.MgMath;
 using MgEngine.Window;
 using MgEngine.Font;
 using MgEngine.Time;
-using static MgEngine.Util.MgMath;
-using ArvoreFractal.Scripts;
-using ArvoreFractal.MgEngine.Input;
+using MgEngine.Input;
 using MgEngine.Sprites;
 
 namespace ArvoreFractal

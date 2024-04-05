@@ -25,3 +25,5 @@ C:\PROJECTS\ArvoreFractal\obj\Debug\net6.0\ArvoreFractal.pdb
 C:\PROJECTS\ArvoreFractal\obj\Debug\net6.0\ArvoreFractal.genruntimeconfig.cache
 C:\PROJECTS\ArvoreFractal\obj\Debug\net6.0\ref\ArvoreFractal.dll
 C:\PROJECTS\ArvoreFractal\bin\Debug\net6.0\Content\Font\Default20.xnb
+C:\PROJECTS\ArvoreFractal\bin\Debug\net6.0\MgEngine.dll
+C:\PROJECTS\ArvoreFractal\bin\Debug\net6.0\MgEngine.pdb
