@@ -4,13 +4,21 @@ Projeto de árvore fractal interativo para uma série educativa no Youtube sobre
 
 ### Assista! :tv:
 
-A série está disponível no youtube, você pode assistir pelo link abaixo:
+A série está disponível no youtube, você pode assistir pelo link: [Árvore Fractal - Playlist](https://www.youtube.com/watch?v=g1-h8ZM8ooc&t=1s](https://www.youtube.com/watch?v=WgULw_7rdmc&list=PLx0Ah-mnl58C-Qf1omB7QJJ5FVdUqEmOB))
 
-[Árvore Fractal - Playlist](https://www.youtube.com/watch?v=g1-h8ZM8ooc&t=1s](https://www.youtube.com/watch?v=WgULw_7rdmc&list=PLx0Ah-mnl58C-Qf1omB7QJJ5FVdUqEmOB))
+
 
 ### Funcionalidade :dart:
 
 Nesse projeto você consegue manipular uma árvore fractal com seu proprio teclado, alterando sua forma e aparência.
+
+<p float="left">
+  <img src= "https://github.com/EuReinoso/ArvoreFractal/blob/master/ReadmeImages/FractalTree1.gif" width="360" height="360"/>
+  <img src= "https://github.com/EuReinoso/ArvoreFractal/blob/master/ReadmeImages/FractalTree2.gif" width="360" height="360"/>
+</p>
+
+
+
 
 ### Controles :video_game:
 
