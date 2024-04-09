@@ -1,0 +1,3 @@
+[submodule "MgEngine"]
+	path = MgEngine
+	url = https://github.com/EuReinoso/MgEngine
