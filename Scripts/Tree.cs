@@ -7,16 +7,14 @@ using static MgEngine.Util.MgMath;
 using Microsoft.Xna.Framework.Input;
 using MgEngine.Time;
 using MgEngine.Input;
-using MgEngine.Sprites;
 using System.Reflection.Emit;
 using System.Reflection.Metadata;
+using MgEngine.Shape;
 
 namespace ArvoreFractal.Scripts
 {
     public class Tree
     {
-        private SpritesManager _sprites;
-
         public int maxLayer;
         public int stickBranches;
         public float stickLengthDecay;
@@ -33,10 +31,8 @@ namespace ArvoreFractal.Scripts
         private int _colorMode;
         private Color[] RAINBOWCOLORS;
 
-    public Tree(SpritesManager sprites) 
+    public Tree() 
         {
-            _sprites = sprites;
-
             _replant = true;
             _sticks = new();
 
@@ -62,20 +58,20 @@ namespace ArvoreFractal.Scripts
             };
         }
 
-        public void Draw()
+        public void Draw(ShapeBatch shapeBatch)
         {
             foreach (Stick stick in _sticks)
             {
-                _sprites.DrawLine(stick, stick.color);
+                shapeBatch.DrawLine(stick, stick.color);
             }
         }
 
-        public void Update(float dt, InputManager key)
+        public void Update(float dt, Inputter key)
         {
             UpdateInput(dt, key);
         }
 
-        private void UpdateInput(float dt, InputManager key)
+        private void UpdateInput(float dt, Inputter key)
         {
             if (key.KeyDown(Keys.Space))
             {
@@ -268,7 +264,7 @@ namespace ArvoreFractal.Scripts
             }
         }
 
-        public void DrawInfo(SpriteBatch spriteBatch, FontManager fonts)
+        public void DrawInfo(SpriteBatch spriteBatch, Font fonts)
         {
             int degrees = (int)ToDegrees(stickAngle);
             string angle = degrees.ToString();
@@ -282,7 +278,8 @@ namespace ArvoreFractal.Scripts
                         + "\n" + "Angulo: " + angle
                         + "\n" + "Ganho de Angulo: " + angleDecay
                         + "\n" + "Grossura: " + stickWidth.ToString();
-            fonts.DrawText(spriteBatch, text, new(20, 30), Color.White);
+
+            fonts.DrawText(spriteBatch, text, new(20, 30),20, Color.White);
 
             //fonts.DrawText(spriteBatch, _stickLengthDecay.ToString("F2"), new(360- 30, 500 + 20), Color.Red, "Default20");
             //fonts.DrawText(spriteBatch, _maxLayer.ToString(), new(360 - 15, 500 + 45), Color.Green, "Default20");
